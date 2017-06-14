@@ -177,7 +177,8 @@ create_proc_from_string(mrb_state *mrb, char *s, int len, mrb_value binding, con
     /* parse error */
     char buf[256];
     int n;
-    n = snprintf(buf, sizeof(buf), "line %d: %s\n", p->error_buffer[0].lineno, p->error_buffer[0].message);
+    n = snprintf(buf, sizeof(buf), "file %s line %d: %s\n", file, p->error_buffer[0].lineno, p->error_buffer[0].message);
+    if (n >= sizeof(buf)) n = sizeof(buf) - 1;
     mrb_parser_free(p);
     mrbc_context_free(mrb, cxt);
     mrb_exc_raise(mrb, mrb_exc_new(mrb, E_SYNTAX_ERROR, buf, n));
