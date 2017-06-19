@@ -12,8 +12,9 @@ plan skip_all => 'Starlet not found'
 
 subtest "tcp" => sub {
     my $port = empty_port();
-    my $upstream = spawn_upstream($port);
-    doit("127.0.0.1:$port");
+    my $addr = "127.0.0.1:$port";
+    my $upstream = spawn_upstream($addr);
+    doit($addr);
 };
 
 subtest "unix-socket" => sub {
